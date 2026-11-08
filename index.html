@@ -1,9 +1,15 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TOEFL – Promote any profile on screen</title>
+
 <style>
 :root{--bg:#12062a;--bg2:#2a0e55;--pink:#ff5c8a;--amber:#ffc83d;--text:#f6f0ff;--mute:#b7a6d9;--line:#43267a}
-*{box-sizing:border-box}html,body{margin:0}
+*{box-sizing:border-box}
+html,body{margin:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);min-height:100vh;background:radial-gradient(900px 500px at 80% -5%,#5b1f9c 0,transparent 60%),radial-gradient(700px 500px at 0 100%,#7a1d63 0,transparent 55%),linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed}
 .wrap{max-width:960px;margin:0 auto;padding:26px 16px 40px}
 header{text-align:center;margin-bottom:20px}
@@ -17,164 +23,493 @@ canvas{width:100%;height:100%;display:block}
 .promo{position:absolute;right:3%;top:7%;display:flex;align-items:center;gap:12px;padding:12px 14px 12px 12px;border-radius:16px;text-decoration:none;color:var(--text);background:rgba(24,8,52,.88);border:2px solid var(--pink);box-shadow:0 18px 50px -10px rgba(255,92,138,.55);opacity:0;transform:translateY(-20px) scale(.9);pointer-events:none;transition:opacity .45s,transform .55s cubic-bezier(.2,1.3,.3,1);z-index:3}
 .promo.show{opacity:1;transform:none;pointer-events:auto}
 .av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:20px;color:#2a0b1c;background:linear-gradient(135deg,var(--amber),var(--pink));flex:none}
-.who{display:flex;flex-direction:column;min-width:0}.who small{font-size:11px;color:var(--mute)}.who b{font-size:16px;max-width:18ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who{display:flex;flex-direction:column;min-width:0}
+.who small{font-size:11px;color:var(--mute)}
+.who b{font-size:16px;max-width:18ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .visit{margin-left:6px;padding:9px 14px;border-radius:999px;background:var(--pink);color:#2a0b1c;font-weight:800;font-size:13px;white-space:nowrap}
 .promo:hover .visit{background:var(--amber)}
 .overlay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(18,6,42,.55);z-index:4}
 .overlay[hidden]{display:none}
 .bar{display:flex;gap:10px;justify-content:center;margin-top:12px}
 button{font:700 15px system-ui,sans-serif;cursor:pointer;border:0;border-radius:12px;padding:12px 20px;background:var(--pink);color:#2a0b1c}
-button:hover{background:var(--amber)}button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}button.ghost:hover{background:var(--line)}
+button:hover{background:var(--amber)}
+button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+button.ghost:hover{background:var(--line)}
 .big{padding:16px 30px;font-size:18px;border-radius:999px}
 .add{display:flex;gap:10px;margin:18px auto 0;max-width:560px}
 .add input{flex:1;min-width:0;padding:15px 16px;border-radius:12px;border:1px solid var(--line);background:#1d0a40;color:var(--text);font:16px system-ui,sans-serif}
 .add button{padding:0 26px}
-.msg{min-height:22px;text-align:center;font-size:14px;color:var(--mute);margin:10px 0 0}.msg.err{color:#ffb3c7}.msg.ok{color:var(--amber)}
+.msg{min-height:22px;text-align:center;font-size:14px;color:var(--mute);margin:10px 0 0}
+.msg.err{color:#ffb3c7}
+.msg.ok{color:var(--amber)}
 .note{text-align:center;color:#8a76b4;font-size:12px;margin-top:24px}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
-@media(max-width:600px){.promo{left:3%;right:3%;top:auto;bottom:62px;padding:9px 10px}.av{width:38px;height:38px}.who b{font-size:14px}.visit{padding:8px 11px;font-size:12px}}
+
+@media(max-width:600px){
+.promo{left:3%;right:3%;top:auto;bottom:62px;padding:9px 10px}
+.av{width:38px;height:38px}
+.who b{font-size:14px}
+.visit{padding:8px 11px;font-size:12px}
+}
 
 html{scroll-behavior:smooth}
 nav.nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(18,6,42,.72);border-bottom:1px solid var(--line)}
 .nav .in{max-width:1040px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .nav .logo{font-size:18px;margin-right:auto;text-decoration:none}
-.nav a{color:var(--mute);text-decoration:none;font-size:14px;font-weight:600}.nav a:hover{color:var(--text)}
-.nav a.cta{background:var(--pink);color:#2a0b1c;padding:9px 16px;border-radius:999px;font-weight:800}.nav a.cta:hover{background:var(--amber);color:#2a0b1c}
+.nav a{color:var(--mute);text-decoration:none;font-size:14px;font-weight:600}
+.nav a:hover{color:var(--text)}
+.nav a.cta{background:var(--pink);color:#2a0b1c;padding:9px 16px;border-radius:999px;font-weight:800}
+.nav a.cta:hover{background:var(--amber);color:#2a0b1c}
+
+/* X authentication button */
+.nav a.xconnect{
+background:transparent;
+color:var(--text);
+border:1px solid var(--pink);
+padding:9px 16px;
+border-radius:999px;
+font-weight:800;
+}
+.nav a.xconnect:hover{
+background:var(--pink);
+color:#2a0b1c;
+}
+
 .wrap{max-width:1040px}
 section.blk{max-width:1040px;margin:0 auto;padding:56px 16px 0}
 section.blk h2{font-size:clamp(22px,3.4vw,32px);margin:0 0 8px;letter-spacing:-.01em;text-align:center}
 section.blk>p.lead{color:var(--mute);text-align:center;margin:0 auto 28px;max-width:56ch}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .card{background:rgba(29,10,64,.7);border:1px solid var(--line);border-radius:16px;padding:22px}
-.card h3{margin:0 0 6px;font-size:18px}.card p{margin:0;color:var(--mute);font-size:15px;line-height:1.5}
+.card h3{margin:0 0 6px;font-size:18px}
+.card p{margin:0;color:var(--mute);font-size:15px;line-height:1.5}
 .step{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--pink));color:#2a0b1c;font-weight:800;margin-bottom:12px}
 .pill{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:10px}
-.pill.live{background:var(--amber);color:#2a0b1c}.pill.soon{background:transparent;border:1px solid var(--line);color:var(--mute)}
+.pill.live{background:var(--amber);color:#2a0b1c}
+.pill.soon{background:transparent;border:1px solid var(--line);color:var(--mute)}
 details{background:rgba(29,10,64,.7);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 auto 10px;max-width:760px}
-summary{cursor:pointer;font-weight:700}details p{color:var(--mute);margin:10px 0 0;line-height:1.5}
+summary{cursor:pointer;font-weight:700}
+details p{color:var(--mute);margin:10px 0 0;line-height:1.5}
 .final{text-align:center;margin:64px auto 0;max-width:1040px;padding:0 16px}
 .final .box{padding:40px 20px;border-radius:22px;background:linear-gradient(135deg,rgba(255,92,138,.25),rgba(255,200,61,.15));border:1px solid var(--pink)}
-.final h2{margin:0 0 10px;font-size:clamp(22px,3.6vw,34px)}.final p{color:var(--mute);margin:0 0 20px}
-a.btn{display:inline-block;text-decoration:none;font-weight:800;padding:14px 26px;border-radius:999px;background:var(--pink);color:#2a0b1c}a.btn:hover{background:var(--amber)}
+.final h2{margin:0 0 10px;font-size:clamp(22px,3.6vw,34px)}
+.final p{color:var(--mute);margin:0 0 20px}
+a.btn{display:inline-block;text-decoration:none;font-weight:800;padding:14px 26px;border-radius:999px;background:var(--pink);color:#2a0b1c}
+a.btn:hover{background:var(--amber)}
 footer{max-width:1040px;margin:56px auto 0;padding:24px 16px 40px;border-top:1px solid var(--line);color:#8a76b4;font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer a{color:var(--mute)}
 .wrap{padding-bottom:0}
-</style></head><body>
-<nav class="nav"><div class="in"><a class="logo" href="#top">TOEFL</a><a href="#how">How it works</a><a href="#platforms">Platforms</a><a href="#faq">FAQ</a><a class="cta" href="#demo">Try the demo</a></div></nav>
-<main class="wrap" id="top">
-<header><h1>Put anyone's profile on your screen. One click away.</h1><p class="sub">Type a username. Viewers click the promotion and land on that profile.</p></header>
 
-<div id="demo"></div><section class="stage" id="stage">
-  <canvas id="cv" width="960" height="540"></canvas>
-  <div class="cap" id="cap"></div>
-  <a class="promo" id="promo" href="https://x.com/creator" target="_blank" rel="noopener noreferrer" tabindex="-1">
-    <span class="av" id="av">C</span><span class="who"><small>Promoted with TOEFL</small><b id="pn">@creator</b></span><span class="visit">Visit Profile</span>
-  </a>
-  <div class="overlay" id="start"><button class="big" id="playBtn" type="button">▶ Play demo</button></div>
+@media(max-width:600px){
+.nav .in{gap:10px}
+.nav a{font-size:12px}
+.nav .logo{font-size:16px}
+.nav a.cta,.nav a.xconnect{padding:8px 11px}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+<div class="in">
+<a class="logo" href="#top">TOEFL</a>
+<a href="#how">How it works</a>
+<a href="#platforms">Platforms</a>
+<a href="#faq">FAQ</a>
+<a class="cta" href="#demo">Try the demo</a>
+<a class="xconnect" href="https://toefl-three.vercel.app/api/auth/x/login">Connect with X</a>
+</div>
+</nav>
+
+<main class="wrap" id="top">
+<header>
+<h1>Put anyone's profile on your screen. One click away.</h1>
+<p class="sub">Type a username. Viewers click the promotion and land on that profile.</p>
+</header>
+
+<div id="demo"></div>
+<section class="stage" id="stage">
+<canvas id="cv" width="960" height="540"></canvas>
+<div class="cap" id="cap"></div>
+<a class="promo" id="promo" href="https://x.com/creator" target="_blank" rel="noopener noreferrer" tabindex="-1">
+<span class="av" id="av">C</span>
+<span class="who"><small>Promoted with TOEFL</small><b id="pn">@creator</b></span>
+<span class="visit">Visit Profile</span>
+</a>
+<div class="overlay" id="start">
+<button class="big" id="playBtn" type="button">▶ Play demo</button>
+</div>
 </section>
-<div class="bar"><button class="ghost" id="pauseBtn" type="button">Pause</button><button class="ghost" id="replayBtn" type="button">Replay</button><button class="ghost" id="soundBtn" type="button">Sound: on</button></div>
+
+<div class="bar">
+<button class="ghost" id="pauseBtn" type="button">Pause</button>
+<button class="ghost" id="replayBtn" type="button">Replay</button>
+<button class="ghost" id="soundBtn" type="button">Sound: on</button>
+</div>
 
 <form class="add" id="f" novalidate>
-  <input id="u" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Enter a username" aria-label="Username">
-  <button type="submit">Add</button>
+<input id="u" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Enter a username" aria-label="Username">
+<button type="submit">Add</button>
 </form>
 <p class="msg" id="msg" role="status" aria-live="polite"></p>
 </main>
-<section class="blk" id="how"><h2>How it works</h2><p class="lead">Three steps from a username to a clickable promotion.</p>
+
+<section class="blk" id="how">
+<h2>How it works</h2>
+<p class="lead">Three steps from a username to a clickable promotion.</p>
 <div class="grid">
 <div class="card"><span class="step">1</span><h3>Enter a username</h3><p>A creator or streamer types the name of the person they want to promote.</p></div>
 <div class="card"><span class="step">2</span><h3>TOEFL builds the promotion</h3><p>It generates a profile card with the name, a picture and a Visit Profile link.</p></div>
 <div class="card"><span class="step">3</span><h3>Viewers click through</h3><p>The card appears on screen. One click takes viewers straight to that profile.</p></div>
-</div></section>
-<section class="blk" id="platforms"><h2>Built for the platforms people use</h2><p class="lead">The first demo runs on X. The rest are planned and need official integrations.</p>
+</div>
+</section>
+
+<section class="blk" id="platforms">
+<h2>Built for the platforms people use</h2>
+<p class="lead">The first demo runs on X. The rest are planned and need official integrations.</p>
 <div class="grid">
 <div class="card"><span class="pill live">Demo available</span><h3>X</h3><p>Promotions link to x.com/username. Try it in the demo above.</p></div>
 <div class="card"><span class="pill soon">Planned</span><h3>TikTok</h3><p>Planned. Will use TikTok's official tools once available.</p></div>
 <div class="card"><span class="pill soon">Planned</span><h3>Instagram</h3><p>Planned. Will use Instagram's official tools once available.</p></div>
 <div class="card"><span class="pill soon">Planned</span><h3>More</h3><p>The code is structured so new platforms can be added one at a time.</p></div>
-</div></section>
-<section class="blk" id="faq"><h2>Questions</h2><p class="lead">Straight answers.</p>
+</div>
+</section>
+
+<section class="blk" id="faq">
+<h2>Questions</h2>
+<p class="lead">Straight answers.</p>
 <details><summary>Is this an official X, TikTok or Instagram integration?</summary><p>No. This is a demonstration. Official integrations are planned and would be added through each platform's approved tools.</p></details>
 <details><summary>Which platform works today?</summary><p>The demo creates links to X profiles in the form https://x.com/username.</p></details>
 <details><summary>What can I type as a username?</summary><p>Between 1 and 15 letters, numbers or underscores. A leading @ is removed for you.</p></details>
 <details><summary>Can I use my own video?</summary><p>The demo character is built into this page. A custom video option is planned.</p></details>
 </section>
-<section class="final"><div class="box"><h2>See your username on screen</h2><p>Add a username in the demo and click the card.</p><a class="btn" href="#demo">Go to the demo</a></div></section>
-<footer><span>© 2026 TOEFL</span><span>Demonstration only. TOEFL is not an official X, TikTok or Instagram integration.</span></footer>
+
+<section class="final">
+<div class="box">
+<h2>See your username on screen</h2>
+<p>Add a username in the demo and click the card.</p>
+<a class="btn" href="#demo">Go to the demo</a>
+</div>
+</section>
+
+<footer>
+<span>© 2026 TOEFL</span>
+<span>Demonstration only. TOEFL is not an official X, TikTok or Instagram integration.</span>
+</footer>
+
 <script>
 (function(){
 'use strict';
+
 var DUR=20, REVEAL=7;
-var PLATFORM={url:function(u){return 'https://x.com/'+encodeURIComponent(u);},ok:/^[A-Za-z0-9_]{1,15}$/}; // add TikTok/Instagram adapters here
-var cv=document.getElementById('cv'),g=cv.getContext('2d'),W=960,H=540;
-var promo=document.getElementById('promo'),cap=document.getElementById('cap');
+var PLATFORM={
+url:function(u){return 'https://x.com/'+encodeURIComponent(u);},
+ok:/^[A-Za-z0-9_]{1,15}$/
+};
+
+var cv=document.getElementById('cv'),
+g=cv.getContext('2d'),
+W=960,H=540;
+
+var promo=document.getElementById('promo'),
+cap=document.getElementById('cap');
+
 var T=0,playing=false,last=0,sound=true,spoken={};
-var LINES=[[0.3,"Hey everyone! Welcome back to the stream."],[3.2,"Today I want to show you something really cool."],[5.8,"Watch this. I'm pressing the TOEFL button!"],[7.3,"Whoa! A profile just popped up on my screen!"],[11,"Anyone watching can click it and go straight to that profile."],[16,"That's TOEFL. Thanks for watching!"]];
-function say(txt){try{if(!sound||!window.speechSynthesis)return;var u=new SpeechSynthesisUtterance(txt);u.rate=1.05;u.pitch=1.15;speechSynthesis.speak(u);}catch(e){}}
-function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e){}}
+
+var LINES=[
+[0.3,"Hey everyone! Welcome back to the stream."],
+[3.2,"Today I want to show you something really cool."],
+[5.8,"Watch this. I'm pressing the TOEFL button!"],
+[7.3,"Whoa! A profile just popped up on my screen!"],
+[11,"Anyone watching can click it and go straight to that profile."],
+[16,"That's TOEFL. Thanks for watching!"]
+];
+
+function say(txt){
+try{
+if(!sound||!window.speechSynthesis)return;
+var u=new SpeechSynthesisUtterance(txt);
+u.rate=1.05;
+u.pitch=1.15;
+speechSynthesis.speak(u);
+}catch(e){}
+}
+
+function stopSay(){
+try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e){}
+}
+
 function ease(x){return x<0?0:x>1?1:x*x*(3-2*x);}
-function speaking(t){for(var i=0;i<LINES.length;i++){var s=LINES[i][0],e=(LINES[i+1]?LINES[i+1][0]:DUR);if(t>=s&&t<Math.min(e,s+LINES[i][1].length*0.075))return true;}return false;}
-function mouthAmt(t){return speaking(t)?Math.max(0,Math.sin(t*14)*.5+Math.sin(t*8.1+1)*.3+.3):0;}
+
+function speaking(t){
+for(var i=0;i<LINES.length;i++){
+var s=LINES[i][0],e=(LINES[i+1]?LINES[i+1][0]:DUR);
+if(t>=s&&t<Math.min(e,s+LINES[i][1].length*0.075))return true;
+}
+return false;
+}
+
+function mouthAmt(t){
+return speaking(t)?Math.max(0,Math.sin(t*14)*.5+Math.sin(t*8.1+1)*.3+.3):0;
+}
+
 function draw(t){
- var gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#2a0e55');gr.addColorStop(1,'#12062a');g.fillStyle=gr;g.fillRect(0,0,W,H);
- g.fillStyle='rgba(255,92,138,.14)';g.beginPath();g.ellipse(W/2,H*0.95,W*0.42,H*0.28,0,0,7);g.fill();
- var cx=W/2-60,bob=Math.sin(t*2.2)*3,cy=H*0.42+bob;
- var sur=t<REVEAL?0:t<9.2?ease((t-REVEAL)/.2):Math.max(0,1-(t-9.2)/.5);
- var bx=cx+300,by=cy+170,press=(t>6.55&&t<7.1)?1:0;  // TOEFL button
- // button pedestal
- g.fillStyle='#3b1a70';g.fillRect(bx-46,by+30,92,70);
- g.fillStyle=press?'#ffc83d':'#ff5c8a';g.shadowColor=press?'#ffc83d':'#ff5c8a';g.shadowBlur=press?40:14;
- g.beginPath();g.ellipse(bx,by+22+press*8,52,20,0,0,7);g.fill();g.shadowBlur=0;
- g.fillStyle='#2a0b1c';g.font='bold 15px system-ui';g.textAlign='center';g.fillText('TOEFL',bx,by+27+press*8);
- // torso
- g.fillStyle='#ff8a2b';rr(cx-100,cy+75,200,150,22);g.fill();g.fillStyle='#e06f12';g.fillRect(cx-18,cy+77,36,148);
- // left arm
- g.fillStyle='#ff8a2b';rr(cx-140,cy+85,40,130,18);g.fill();
- // right arm reaches button
- var k=ease((t-5.4)/0.9)*(t<7.4?1:1-ease((t-7.4)/.8));
- var sx=cx+110,sy=cy+95,ex=sx+(bx-sx-30)*k+ (1-k)*20,ey=sy+(by-sy)*k+(1-k)*110;
- g.strokeStyle='#ff8a2b';g.lineCap='round';g.lineWidth=36;g.beginPath();g.moveTo(sx,sy);g.lineTo(ex,ey);g.stroke();
- g.fillStyle='#ffd23a';g.beginPath();g.arc(ex,ey,19,0,7);g.fill();
- // neck, head
- g.fillStyle='#e0b000';g.fillRect(cx-30,cy+60,60,30);
- g.fillStyle='#ffd23a';rr(cx-75,cy-95,150,160,28);g.fill();rr(cx-26,cy-114,52,26,6);g.fill();
- g.fillStyle='#2b1b12';g.beginPath();g.moveTo(cx-80,cy-30);g.arc(cx,cy-40,80,Math.PI,0);g.lineTo(cx+80,cy-30);g.lineTo(cx+75,cy-50);g.lineTo(cx-75,cy-50);g.fill();
- // eyes
- var ey2=cy-18,blink=(Math.floor(t*30)%100)<3&&sur===0;
- for(var s=-1;s<=1;s+=2){var x=cx+s*30,r=8+9*sur;
-  if(blink){g.strokeStyle='#1a1a1a';g.lineWidth=4;g.beginPath();g.moveTo(x-9,ey2);g.lineTo(x+9,ey2);g.stroke();}
-  else{ if(sur>0){g.fillStyle='#fff';g.beginPath();g.arc(x,ey2,r+4,0,7);g.fill();}
-   g.fillStyle='#1a1a1a';g.beginPath();g.ellipse(x,ey2,sur>0?r*.6:8,sur>0?r*.6:10,0,0,7);g.fill();}
-  g.strokeStyle='#2b1b12';g.lineWidth=5;var by2=ey2-26-16*sur;g.beginPath();g.moveTo(x-16,by2+s*4*(1-sur));g.lineTo(x+16,by2-s*4*(1-sur));g.stroke();}
- // mouth
- var m=mouthAmt(t),my=cy+32;g.fillStyle='#4a0a14';
- if(sur>.3){g.beginPath();g.ellipse(cx,my+8,12,17,0,0,7);g.fill();}
- else if(m>.12){var h=5+24*m;g.beginPath();g.ellipse(cx,my+h/3,22,h/1.6,0,0,7);g.fill();}
- else{g.strokeStyle='#4a0a14';g.lineWidth=5;g.beginPath();g.arc(cx,my-6,24,.2,Math.PI-.2);g.stroke();}
- // reveal ring
- if(t>=REVEAL&&t<REVEAL+.6){g.strokeStyle='rgba(255,200,61,'+(1-(t-REVEAL)/.6)+')';g.lineWidth=6;g.beginPath();g.arc(cx,cy,100+(t-REVEAL)*500,0,7);g.stroke();}
+var gr=g.createLinearGradient(0,0,0,H);
+gr.addColorStop(0,'#2a0e55');
+gr.addColorStop(1,'#12062a');
+g.fillStyle=gr;
+g.fillRect(0,0,W,H);
+
+g.fillStyle='rgba(255,92,138,.14)';
+g.beginPath();
+g.ellipse(W/2,H*0.95,W*0.42,H*0.28,0,0,7);
+g.fill();
+
+var cx=W/2-60,bob=Math.sin(t*2.2)*3,cy=H*0.42+bob;
+var sur=t<REVEAL?0:t<9.2?ease((t-REVEAL)/.2):Math.max(0,1-(t-9.2)/.5);
+var bx=cx+300,by=cy+170,press=(t>6.55&&t<7.1)?1:0;
+
+g.fillStyle='#3b1a70';
+g.fillRect(bx-46,by+30,92,70);
+g.fillStyle=press?'#ffc83d':'#ff5c8a';
+g.shadowColor=press?'#ffc83d':'#ff5c8a';
+g.shadowBlur=press?40:14;
+g.beginPath();
+g.ellipse(bx,by+22+press*8,52,20,0,0,7);
+g.fill();
+g.shadowBlur=0;
+g.fillStyle='#2a0b1c';
+g.font='bold 15px system-ui';
+g.textAlign='center';
+g.fillText('TOEFL',bx,by+27+press*8);
+
+g.fillStyle='#ff8a2b';
+rr(cx-100,cy+75,200,150,22);
+g.fill();
+g.fillStyle='#e06f12';
+g.fillRect(cx-18,cy+77,36,148);
+
+g.fillStyle='#ff8a2b';
+rr(cx-140,cy+85,40,130,18);
+g.fill();
+
+var k=ease((t-5.4)/0.9)*(t<7.4?1:1-ease((t-7.4)/.8));
+var sx=cx+110,sy=cy+95;
+var ex=sx+(bx-sx-30)*k+(1-k)*20;
+var ey=sy+(by-sy)*k+(1-k)*110;
+
+g.strokeStyle='#ff8a2b';
+g.lineCap='round';
+g.lineWidth=36;
+g.beginPath();
+g.moveTo(sx,sy);
+g.lineTo(ex,ey);
+g.stroke();
+
+g.fillStyle='#ffd23a';
+g.beginPath();
+g.arc(ex,ey,19,0,7);
+g.fill();
+
+g.fillStyle='#e0b000';
+g.fillRect(cx-30,cy+60,60,30);
+g.fillStyle='#ffd23a';
+rr(cx-75,cy-95,150,160,28);
+g.fill();
+rr(cx-26,cy-114,52,26,6);
+g.fill();
+
+g.fillStyle='#2b1b12';
+g.beginPath();
+g.moveTo(cx-80,cy-30);
+g.arc(cx,cy-40,80,Math.PI,0);
+g.lineTo(cx+80,cy-30);
+g.lineTo(cx+75,cy-50);
+g.lineTo(cx-75,cy-50);
+g.fill();
+
+var ey2=cy-18,blink=(Math.floor(t*30)%100)<3&&sur===0;
+
+for(var s=-1;s<=1;s+=2){
+var x=cx+s*30,r=8+9*sur;
+if(blink){
+g.strokeStyle='#1a1a1a';
+g.lineWidth=4;
+g.beginPath();
+g.moveTo(x-9,ey2);
+g.lineTo(x+9,ey2);
+g.stroke();
+}else{
+if(sur>0){
+g.fillStyle='#fff';
+g.beginPath();
+g.arc(x,ey2,r+4,0,7);
+g.fill();
 }
-function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
-function setPromo(on){promo.classList.toggle('show',on);promo.tabIndex=on?0:-1;}
-function captions(t){var c='';for(var i=0;i<LINES.length;i++)if(t>=LINES[i][0]&&t<LINES[i][0]+4.2)c=LINES[i][1];cap.textContent=c;}
-function speech(t){for(var i=0;i<LINES.length;i++)if(t>=LINES[i][0]&&!spoken[i]){spoken[i]=1;say(LINES[i][1]);}}
+g.fillStyle='#1a1a1a';
+g.beginPath();
+g.ellipse(x,ey2,sur>0?r*.6:8,sur>0?r*.6:10,0,0,7);
+g.fill();
+}
+g.strokeStyle='#2b1b12';
+g.lineWidth=5;
+var by2=ey2-26-16*sur;
+g.beginPath();
+g.moveTo(x-16,by2+s*4*(1-sur));
+g.lineTo(x+16,by2-s*4*(1-sur));
+g.stroke();
+}
+
+var m=mouthAmt(t),my=cy+32;
+g.fillStyle='#4a0a14';
+
+if(sur>.3){
+g.beginPath();
+g.ellipse(cx,my+8,12,17,0,0,7);
+g.fill();
+}else if(m>.12){
+var h=5+24*m;
+g.beginPath();
+g.ellipse(cx,my+h/3,22,h/1.6,0,0,7);
+g.fill();
+}else{
+g.strokeStyle='#4a0a14';
+g.lineWidth=5;
+g.beginPath();
+g.arc(cx,my-6,24,.2,Math.PI-.2);
+g.stroke();
+}
+
+if(t>=REVEAL&&t<REVEAL+.6){
+g.strokeStyle='rgba(255,200,61,'+(1-(t-REVEAL)/.6)+')';
+g.lineWidth=6;
+g.beginPath();
+g.arc(cx,cy,100+(t-REVEAL)*500,0,7);
+g.stroke();
+}
+}
+
+function rr(x,y,w,h,r){
+g.beginPath();
+g.moveTo(x+r,y);
+g.arcTo(x+w,y,x+w,y+h,r);
+g.arcTo(x+w,y+h,x,y+h,r);
+g.arcTo(x,y+h,x,y,r);
+g.arcTo(x,y,x+w,y,r);
+g.closePath();
+}
+
+function setPromo(on){
+promo.classList.toggle('show',on);
+promo.tabIndex=on?0:-1;
+}
+
+function captions(t){
+var c='';
+for(var i=0;i<LINES.length;i++){
+if(t>=LINES[i][0]&&t<LINES[i][0]+4.2)c=LINES[i][1];
+}
+cap.textContent=c;
+}
+
+function speech(t){
+for(var i=0;i<LINES.length;i++){
+if(t>=LINES[i][0]&&!spoken[i]){
+spoken[i]=1;
+say(LINES[i][1]);
+}
+}
+}
+
 function frame(now){
- if(playing){T+=Math.min(.1,(now-last)/1000);last=now;if(T>=DUR){T=DUR;playing=false;setBtn();}speech(T);}
- draw(T);setPromo(T>=REVEAL);captions(T);requestAnimationFrame(frame);
+if(playing){
+T+=Math.min(.1,(now-last)/1000);
+last=now;
+if(T>=DUR){
+T=DUR;
+playing=false;
+setBtn();
 }
-function setBtn(){document.getElementById('pauseBtn').textContent=playing?'Pause':(T>=DUR?'Finished':'Resume');}
-function play(){document.getElementById('start').hidden=true;playing=true;last=performance.now();setBtn();try{window.speechSynthesis&&speechSynthesis.resume();}catch(e){}}
+speech(T);
+}
+draw(T);
+setPromo(T>=REVEAL);
+captions(T);
+requestAnimationFrame(frame);
+}
+
+function setBtn(){
+document.getElementById('pauseBtn').textContent=playing?'Pause':(T>=DUR?'Finished':'Resume');
+}
+
+function play(){
+document.getElementById('start').hidden=true;
+playing=true;
+last=performance.now();
+setBtn();
+try{window.speechSynthesis&&speechSynthesis.resume();}catch(e){}
+}
+
 document.getElementById('playBtn').onclick=play;
-document.getElementById('pauseBtn').onclick=function(){if(T>=DUR)return;if(playing){playing=false;try{speechSynthesis.pause();}catch(e){}}else play();setBtn();};
-document.getElementById('replayBtn').onclick=function(){stopSay();spoken={};T=0;play();};
-document.getElementById('soundBtn').onclick=function(){sound=!sound;this.textContent='Sound: '+(sound?'on':'off');if(!sound)stopSay();};
-// username
-var f=document.getElementById('f'),u=document.getElementById('u'),msg=document.getElementById('msg');
-function setUser(n){document.getElementById('pn').textContent='@'+n;document.getElementById('av').textContent=n.charAt(0).toUpperCase();promo.href=PLATFORM.url(n);}
-f.addEventListener('submit',function(e){e.preventDefault();var n=u.value.trim().replace(/^@+/,'');
- if(!PLATFORM.ok.test(n)){msg.className='msg err';msg.textContent='Use 1–15 letters, numbers or underscores.';u.focus();return;}
- setUser(n);msg.className='msg ok';msg.textContent='Added. The promotion now links to x.com/'+n+'.';u.value='';});
-setUser('creator');requestAnimationFrame(frame);
-window.__toefl={seek:function(t){T=t;spoken={};},get:function(){return T;}};
+
+document.getElementById('pauseBtn').onclick=function(){
+if(T>=DUR)return;
+if(playing){
+playing=false;
+try{speechSynthesis.pause();}catch(e){}
+}else play();
+setBtn();
+};
+
+document.getElementById('replayBtn').onclick=function(){
+stopSay();
+spoken={};
+T=0;
+play();
+};
+
+document.getElementById('soundBtn').onclick=function(){
+sound=!sound;
+this.textContent='Sound: '+(sound?'on':'off');
+if(!sound)stopSay();
+};
+
+var f=document.getElementById('f'),
+u=document.getElementById('u'),
+msg=document.getElementById('msg');
+
+function setUser(n){
+document.getElementById('pn').textContent='@'+n;
+document.getElementById('av').textContent=n.charAt(0).toUpperCase();
+promo.href=PLATFORM.url(n);
+}
+
+f.addEventListener('submit',function(e){
+e.preventDefault();
+var n=u.value.trim().replace(/^@+/,'');
+if(!PLATFORM.ok.test(n)){
+msg.className='msg err';
+msg.textContent='Use 1–15 letters, numbers or underscores.';
+u.focus();
+return;
+}
+setUser(n);
+msg.className='msg ok';
+msg.textContent='Added. The promotion now links to x.com/'+n+'.';
+u.value='';
+});
+
+setUser('creator');
+requestAnimationFrame(frame);
+
+window.__toefl={
+seek:function(t){T=t;spoken={};},
+get:function(){return T;}
+};
+
 })();
-</script></body></html>
+</script>
+
+</body>
+</html>
