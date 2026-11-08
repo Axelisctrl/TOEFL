@@ -1,16 +1,15 @@
 
-import crypto from "crypto";
+const crypto = require("crypto");
 
-export default function handler(req, res) {
+module.exports = function handler(req, res) {
   const clientId = process.env.X_CLIENT_ID;
   const redirectUri = process.env.X_REDIRECT_URI;
 
   if (!clientId || !redirectUri) {
-    return res.status(500).send("X authentication credentials are missing.");
+    return res.status(500).send("Missing X authentication settings.");
   }
 
-  const state = "s" + crypto.randomUUID();
-
+  const state = "s" + crypto.randomBytes(24).toString("hex");
   const codeVerifier = crypto.randomBytes(32).toString("base64url");
 
   const codeChallenge = crypto
@@ -18,12 +17,10 @@ export default function handler(req, res) {
     .update(codeVerifier)
     .digest("base64url");
 
-  const cookies = [
+  res.setHeader("Set-Cookie", [
     `x_state=${state}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`,
     `x_verifier=${codeVerifier}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`
-  ];
-
-  res.setHeader("Set-Cookie", cookies);
+  ]);
 
   const params = new URLSearchParams({
     response_type: "code",
@@ -38,4 +35,4 @@ export default function handler(req, res) {
   return res.redirect(
     "https://x.com/i/oauth2/authorize?" + params.toString()
   );
-}
+};
