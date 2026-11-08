@@ -1,16 +1,21 @@
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+  if (req.method !== "GET") {
+    return res.status(405).send("Method not allowed");
+  }
+
   const cookies = {};
 
   (req.headers.cookie || "").split(";").forEach(item => {
     const parts = item.trim().split("=");
     const key = parts.shift();
-    if (key) cookies[key] = decodeURIComponent(parts.join("="));
+
+    if (key) {
+      cookies[key] = decodeURIComponent(parts.join("="));
+    }
   });
 
-  const code = req.query.code;
-  const state = req.query.state;
-  const error = req.query.error;
+  const { code, state, error } = req.query;
 
   if (error) {
     return res.status(400).send("X authorization was denied.");
@@ -84,12 +89,11 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).send(
       "Successfully connected to X! Welcome, @" +
-      user.data.username +
-      ". This was a test; your tokens have not been saved."
+      user.data.username
     );
 
   } catch (err) {
     console.error("X authentication error:", err);
     return res.status(500).send("X authentication failed.");
   }
-};
+}
